@@ -1,0 +1,152 @@
+// // index.js
+// const express = require('express');
+// const mongoose = require('mongoose');
+// const app = express();
+// const PORT = process.env.PORT || 3000;
+
+// // Replace the connection string with your MongoDB Atlas connection string
+// const mongoURI = 'mongodb+srv://pk:pk@cluster0.8lulz4b.mongodb.net/?retryWrites=true&w=majority';
+// // Connect to MongoDB Atlas
+// mongoose.connect(mongoURI)
+//     .then(() => {
+//         console.log('Connected to MongoDB Atlas');
+//     })
+//     .catch((err) => {
+//         console.error('Error connecting to MongoDB Atlas', err);
+//     });
+
+// // Body parser middleware
+// app.use(express.urlencoded({ extended: true }));
+
+// // Serve static files (CSS, images, etc.)
+// app.use(express.static('public'));
+// const userSchema = new mongoose.Schema({
+//     username: String,
+//     email: String,
+//     password: String,
+//     isDeleted: { type: Boolean, default: false } // New field
+// });
+
+// const User = mongoose.model('User', userSchema);
+
+// // Define routes
+// app.get('/', (req, res) => {
+//     res.sendFile(__dirname + '/index.html');
+// });
+// app.post('/register', async (req, res) => {
+//     try {
+//         // Handle registration logic (save user data to MongoDB Atlas)
+//         // Use req.body to access form data
+//         // Example:
+//         const newUser = await User.create({
+//             username: req.body.username,
+//             email: req.body.email,
+//             password: req.body.password,
+//             isDeleted: false // Set isDeleted to false for new users
+//         });
+        
+//         console.log('User saved:', newUser);
+//         res.send('Registration successful!');
+//     } catch (error) {
+//         console.error('Error saving user:', error);
+//         res.status(500).send('Error saving user');
+//     }
+// });
+// // index.js
+
+// // ... (previous code)
+
+// // Define a route to retrieve and display user data
+// app.get('/users', async (req, res) => {
+//     try {
+//         // Fetch users that are not deleted
+//         const users = await User.find({ isDeleted: false });
+
+//         // Render HTML to display non-deleted users
+//         res.send(`
+//             <h1>User List</h1>
+//             <ul>
+//                 ${users.map(user => `<li>${user.username} - ${user.email} 
+//                     <a href="/delete/${user._id}">Delete</a></li>`).join('')}
+//             </ul>
+//         `);
+//     } catch (error) {
+//         console.error('Error fetching users:', error);
+//         res.status(500).send('Error fetching users');
+//     }
+// });
+
+//   // ... (Remaining code)
+//   app.get('/delete/:id', async (req, res) => {
+//     try {
+//         const userId = req.params.id;
+
+//         // Find the user by ID and update isDeleted to true
+//         const result = await User.findByIdAndUpdate(userId, { isDeleted: true });
+
+//         if (result) {
+//             res.send('User deleted successfully!');
+//         } else {
+//             res.status(404).send('User not found');
+//         }
+//     } catch (error) {
+//         console.error('Error deleting user:', error);
+//         res.status(500).send('Error deleting user');
+//     }
+// });
+
+
+
+// // ... (previous code)
+
+// // Define routes
+// app.get('/', (req, res) => {
+//     res.sendFile(__dirname + '/index.html');
+// });
+
+// // Registration route (unchanged)
+
+// // View all users route
+// app.get('/users', async (req, res) => {
+//     try {
+//         // Fetch all users from the database
+//         const users = await User.find();
+        
+//         // Render a simple HTML page to display user data
+//         res.send(`
+//             <h1>User List</h1>
+//             <ul>
+//                 ${users.map(user => `<li>${user.username} - ${user.email}</li>`).join('')}
+//             </ul>
+//         `);
+//     } catch (error) {
+//         console.error('Error fetching users:', error);
+//         res.status(500).send('Error fetching users');
+//     }
+// });
+
+// // View deleted users route
+// app.get('/deleted-users', async (req, res) => {
+//     try {
+//         // Fetch users with isDeleted set to true
+//         const deletedUsers = await User.find({ isDeleted: true });
+        
+//         // Render a simple HTML page to display deleted user data
+//         res.send(`
+//             <h1>Deleted User List</h1>
+//             <ul>
+//                 ${deletedUsers.map(user => `<li>${user.username} - ${user.email}</li>`).join('')}
+//             </ul>
+//         `);
+//     } catch (error) {
+//         console.error('Error fetching deleted users:', error);
+//         res.status(500).send('Error fetching deleted users');
+//     }
+// });
+
+// // ... (remaining code)
+
+// // Start server
+// app.listen(PORT, () => {
+//     console.log(`Server is running on http://localhost:${PORT}`);
+// });
